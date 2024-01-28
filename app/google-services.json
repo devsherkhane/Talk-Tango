@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "234502976456",
+    "project_id": "talktango-8bc0e",
+    "storage_bucket": "talktango-8bc0e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234502976456:android:ca0d80dd9e08ad0ca406fd",
+        "android_client_info": {
+          "package_name": "com.example.talktango2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBj76hP0gXJ-ybdTQDfpOyf-wY-l45IVcY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
