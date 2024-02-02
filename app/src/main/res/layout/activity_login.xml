@@ -89,7 +89,7 @@
                 android:hint="Password"
                 android:padding="10dp"
                 android:ems="1"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:textSize="13sp"
                 android:textStyle="normal"
                 android:textColorHint="@color/white"
@@ -101,21 +101,25 @@
 
             <Button
                 android:id="@+id/loginBtn"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
                 android:text="Login"
-                android:textStyle="bold|normal"
-                android:textSize="16sp"
-                app:backgroundTint="#FFC107"
                 android:textAllCaps="false"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:textSize="16sp"
+                android:background="@drawable/background_shape"
+                android:textStyle="bold|normal"
+                app:backgroundTint="#FFC107" />
+
             <Button
                 android:id="@+id/signupBtn"
                 android:text="Sign up"
                 android:textStyle="bold|normal"
                 android:textSize="16sp"
                 app:backgroundTint="#FFC107"
+                android:layout_marginTop="10dp"
                 android:textAllCaps="false"
-                android:layout_width="match_parent"
+                android:layout_width="100dp"
+                android:background="@drawable/background_shape"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 

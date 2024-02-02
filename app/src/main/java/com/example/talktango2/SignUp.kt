@@ -37,28 +37,17 @@ class SignUp : AppCompatActivity() {
 
         btnSignup.visibility = View.GONE // Initially hide the SignUp button
 
-        btnSignup.setOnClickListener {
-            val name = edtName.text.toString()
-            val email = edtEmail.text.toString()
-            val password = edtPassword.text.toString()
-
-            // Perform the SignUp action
-            sendVerificationEmail(name, email, password)
-        }
-
         btnSendVerification.setOnClickListener {
             val name = edtName.text.toString()
             val email = edtEmail.text.toString()
             val password = edtPassword.text.toString()
 
-            // Send verification email and make the SignUp button visible after successful email sent
+            // Send verification email
             sendVerificationEmail(name, email, password)
         }
     }
 
     private fun sendVerificationEmail(name: String, email: String, password: String) {
-        btnSignup.visibility = View.GONE
-
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -68,10 +57,22 @@ class SignUp : AppCompatActivity() {
                             if (verificationTask.isSuccessful) {
                                 Toast.makeText(
                                     this@SignUp,
-                                    "Verification email sent successfully. Press Sign Up to complete the registration.",
+                                    "Verification email sent successfully. Please check your email and verify.",
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                btnSignup.visibility = View.VISIBLE // Make the SignUp button visible
+
+                                // Set an OnClickListener to make SignUp button visible after email verification
+                                btnSignup.visibility = View.VISIBLE
+
+                                // Add an OnClickListener to handle SignUp button click
+                                btnSignup.setOnClickListener {
+                                    // Add user to the database
+                                    addUserToDatabase(name, email, user?.uid ?: "")
+
+                                    // Redirect to MainActivity
+                                    startActivity(Intent(this@SignUp, MainActivity::class.java))
+                                    finish() // Optional: Finish SignUp activity if you don't want to come back to it
+                                }
                             } else {
                                 Toast.makeText(
                                     this@SignUp,
@@ -79,8 +80,8 @@ class SignUp : AppCompatActivity() {
                                     Toast.LENGTH_SHORT
                                 ).show()
 
-                                // If verification fails, show the Sign Up button again
-                                btnSignup.visibility = View.GONE
+                                // Show an error message
+                                btnSignup.visibility = View.GONE // Hide SignUp button on verification failure
                             }
                         }
                 } else {
@@ -90,13 +91,33 @@ class SignUp : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
 
-                    // If authentication fails, show the Sign Up button again
-                    btnSignup.visibility = View.GONE
+                    // Show an error message
+                    btnSignup.visibility = View.GONE // Hide SignUp button on authentication failure
                 }
             }
     }
 
     private fun addUserToDatabase(name: String, email: String, uid: String) {
         mDbRef.child("users").child(uid).setValue(User(name, email, uid))
+            .addOnCompleteListener { databaseTask ->
+                if (databaseTask.isSuccessful) {
+                    Toast.makeText(
+                        this@SignUp,
+                        "User added to the database successfully.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        this@SignUp,
+                        "Error adding user to the database: ${databaseTask.exception?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
     }
 }
+
+
+
+
+
