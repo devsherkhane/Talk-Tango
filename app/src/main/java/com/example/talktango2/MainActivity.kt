@@ -58,6 +58,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.anonymous_chat -> {
+                // Start the anonymous chat
+                startAnonymousChat()
+                return true
+            }
             R.id.logout -> {
                 mAuth.signOut()
                 startActivity(Intent(this@MainActivity, LoginActivity::class.java))
@@ -66,5 +71,11 @@ class MainActivity : AppCompatActivity() {
             }
             else -> return super.onOptionsItemSelected(item)
         }
+    }
+    
+    private fun startAnonymousChat() {
+        val intent = Intent(this@MainActivity, AnonymousChatActivity::class.java)
+        intent.putExtra("roomId", "global_anonymous_chat")
+        startActivity(intent)
     }
 }

@@ -49,7 +49,11 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>) 
             }
             ITEM_RECEIVE -> {
                 val viewHolder = holder as ReceiveViewHolder
-                viewHolder.receiveMessage.text = currentMessage.message
+                if (currentMessage.senderName != null) {
+                    viewHolder.receiveMessage.text = "${currentMessage.senderName}: ${currentMessage.message}"
+                } else {
+                    viewHolder.receiveMessage.text = currentMessage.message
+                }
             }
         }
     }
